@@ -1,13 +1,18 @@
-import {createStore, applyMiddleware} from 'redux';
-import rootReducer from './reducers';
-import thunk from 'redux-thunk';
+import {configureStore} from '@reduxjs/toolkit';
+import rootReducer from './slices';
 import {IFavoriteMovieObject} from '../types';
 
-const favoriteList: Array<IFavoriteMovieObject> = JSON.parse(localStorage.getItem('ts-toolkit-fav-movies') || '[]');
-const store = createStore(rootReducer, {favorites: favoriteList}, applyMiddleware(thunk));
+const favoriteList:IFavoriteMovieObject[] = JSON.parse(localStorage.getItem('ts-toolkit-fav-movies') || '[]');
 
-store.subscribe(() => {
-    localStorage.setItem('ts-toolkit-fav-movies', JSON.stringify(store.getState().favorites))
+const storage = configureStore({
+    reducer: rootReducer,
+    preloadedState: {
+        favorites: favoriteList
+    }
 });
 
-export default store;
+storage.subscribe(() => {
+    localStorage.setItem('ts-toolkit-fav-movies', JSON.stringify(storage.getState().favorites))
+});
+
+export default storage;

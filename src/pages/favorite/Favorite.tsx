@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {IFavoriteMovieObject} from '../../types';
-import {removeFavoriteAction} from '../../store/actions';
 import style from './Favorite.module.css';
 import noposter from '../../img/no-image.png';
 import {favoritesSelector} from '../../store/selectors';
+import {removeFavAction} from '../../store/slices/FavoriteSlice';
 
 const posterUrl = 'https://image.tmdb.org/t/p/w342';
 
@@ -37,7 +37,7 @@ const Favorite: FC = () => {
                                             <div>
                                                 <button
                                                     className={style.button}
-                                                    onClick={() => dispatch(removeFavoriteAction(movie.id))}
+                                                    onClick={() => dispatch(removeFavAction(movie.id))}
                                                 >
                                                     Unfavorite
                                                 </button>

@@ -1,14 +1,14 @@
 import React, {FC, useCallback, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {addFavoriteAction, removeFavoriteAction} from '../../store/actions';
-import {asyncFetchDataAction} from '../../store/actions/asyncActions';
+import {favoritesSelector, moviesSelector} from '../../store/selectors';
+import {fetchMoviesList, fetchNextPageMoviesId} from '../../store/actions/asyncActions';
+import {addFavAction, removeFavAction} from '../../store/slices/FavoriteSlice';
 import {IModalParams} from '../../types';
 import style from './Modal.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import noposter from '../../img/no-image.png'
-import {favoritesSelector, moviesSelector} from '../../store/selectors';
 
 const posterUrl = 'https://image.tmdb.org/t/p/w342';
 
@@ -26,7 +26,8 @@ const Modal: FC = () => {
     const lastMovie = movies.results?.length === currentIndex + 1 && movies.total_pages === +page;
 
     useEffect(() => {
-        dispatch(asyncFetchDataAction(+page));
+        dispatch(fetchMoviesList(+page));
+        dispatch(fetchNextPageMoviesId(+page+1))
     }, [page, dispatch]);
 
     useEffect(() => {
@@ -75,8 +76,8 @@ const Modal: FC = () => {
                                 className={style.button}
                                 onClick={() => {
                                     storeFavorites.some(compare)
-                                        ? dispatch(removeFavoriteAction(+id))
-                                        : dispatch(addFavoriteAction(
+                                        ? dispatch(removeFavAction(+id))
+                                        : dispatch(addFavAction(
                                             {
                                                 id: +id,
                                                 title: currentMovie.title,

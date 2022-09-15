@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {asyncFetchDataAction} from '../../store/actions/asyncActions';
+import {fetchMoviesList} from '../../store/actions/asyncActions';
 import {moviesSelector} from '../../store/selectors';
 import ListPoster from './ListPoster';
 import Pagination from '../../components/pagination/Pagination';
@@ -14,7 +14,7 @@ const List: FC = () => {
     const pageNum = !page ? 1 : +page;
 
     useEffect(() => {
-        dispatch(asyncFetchDataAction(pageNum));
+        dispatch(fetchMoviesList(pageNum));
     }, [pageNum, dispatch]);
 
     useEffect(() => {
@@ -22,24 +22,22 @@ const List: FC = () => {
     }, []);
 
     return (
-
-            <div>
-                <div className="page-title">Latest Releases</div>
-                <div className={`${style.posters} page-content`}>
-                    {
-                        storeMovies.data.results?.map(movie => {
-                            return (
-                                <ListPoster
-                                    key={movie.id}
-                                    movieItem={movie}
-                                    page={pageNum}/>
-                            );
-                        })
-                    }
-                </div>
-                <Pagination page={pageNum} totalPage={storeMovies.data.total_pages}/>
+        <div>
+            <div className="page-title">Latest Releases</div>
+            <div className={`${style.posters} page-content`}>
+                {
+                    storeMovies.data.results?.map(movie => {
+                        return (
+                            <ListPoster
+                                key={movie.id}
+                                movieItem={movie}
+                                page={pageNum}/>
+                        );
+                    })
+                }
             </div>
-
+            <Pagination page={pageNum} totalPage={storeMovies.data.total_pages}/>
+        </div>
     )
 };
 
