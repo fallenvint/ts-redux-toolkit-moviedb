@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchMoviesList} from '../../store/actions/asyncActions';
 import {moviesSelector} from '../../store/selectors';
 import ListPoster from './ListPoster';
@@ -9,8 +9,8 @@ import style from './List.module.css';
 
 const List: FC = () => {
     const {page} = useParams();
-    const dispatch: any = useDispatch();
-    const storeMovies = useSelector(moviesSelector);
+    const dispatch = useAppDispatch();
+    const storeMovies = useAppSelector(moviesSelector);
     const pageNum = !page ? 1 : +page;
 
     useEffect(() => {

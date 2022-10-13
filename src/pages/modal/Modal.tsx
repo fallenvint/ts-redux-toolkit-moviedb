@@ -1,22 +1,23 @@
 import React, {FC, useCallback, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {favoritesSelector, moviesSelector} from '../../store/selectors';
 import {fetchMoviesList, fetchNextPageMoviesId} from '../../store/actions/asyncActions';
-import {addFavAction, removeFavAction} from '../../store/slices/FavoriteSlice';
+import {addFavAction, removeFavAction} from '../../store/slices/favoriteSlice';
 import {IModalParams} from '../../types';
 import style from './Modal.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import noposter from '../../img/no-image.png'
 
+
 const posterUrl = 'https://image.tmdb.org/t/p/w342';
 
 const Modal: FC = () => {
     const {page = '', id = ''} = useParams() as IModalParams;
-    const dispatch: any = useDispatch();
-    const storeFavorites = useSelector(favoritesSelector);
-    const storeMovies = useSelector(moviesSelector);
+    const dispatch = useAppDispatch();
+    const storeFavorites = useAppSelector(favoritesSelector);
+    const storeMovies = useAppSelector(moviesSelector);
 
     const movies = storeMovies.data;
     const npMovieId = storeMovies.npMovieId;

@@ -1,16 +1,17 @@
 import React, {FC, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {IFavoriteMovieObject} from '../../types';
 import style from './Favorite.module.css';
 import noposter from '../../img/no-image.png';
 import {favoritesSelector} from '../../store/selectors';
-import {removeFavAction} from '../../store/slices/FavoriteSlice';
+import {removeFavAction} from '../../store/slices/favoriteSlice';
+
 
 const posterUrl = 'https://image.tmdb.org/t/p/w342';
 
 const Favorite: FC = () => {
-    const storeFavorite = useSelector(favoritesSelector);
-    const dispatch = useDispatch();
+    const storeFavorite = useAppSelector(favoritesSelector);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         document.title = 'My favorites';

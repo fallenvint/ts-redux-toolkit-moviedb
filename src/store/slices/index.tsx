@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import {favoriteReducer} from './FavoriteSlice';
-import {movieReducer} from './MovieSlice';
+import {movieReducer} from './movieSlice';
+import {favoriteReducer} from './favoriteSlice';
 
 export default combineReducers({
     favorites: favoriteReducer,

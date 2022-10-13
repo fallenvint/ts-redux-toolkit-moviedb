@@ -15,4 +15,6 @@ storage.subscribe(() => {
     localStorage.setItem('ts-toolkit-fav-movies', JSON.stringify(storage.getState().favorites))
 });
 
+export type RootState = ReturnType<typeof storage.getState>
+export type AppDispatch = typeof storage.dispatch
 export default storage;
